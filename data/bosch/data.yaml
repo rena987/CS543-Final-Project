@@ -1,0 +1,6 @@
+train: C:/Users/seren/CS543-Final-Project/data/bosch/train/images
+val: C:/Users/seren/CS543-Final-Project/data/bosch/valid/images
+test: C:/Users/seren/CS543-Final-Project/data/bosch/test/images
+
+nc: 5
+names: ['class0', 'class1', 'class2', 'class3', 'class4']

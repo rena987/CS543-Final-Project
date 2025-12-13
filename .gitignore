@@ -1,0 +1,32 @@
+# === Python cache ===
+__pycache__/
+*.py[cod]
+*.pyo
+
+# === Virtual envs ===
+.venv/
+venv/
+env/
+
+# === VSCode ===
+.vscode/
+
+# === Data (keep config, ignore big image/label directories) ===
+data/bosch/train/
+data/bosch/valid/
+data/bosch/test/
+data/bosch/*.zip
+
+# Keep the YAML config
+!data/bosch/data.yaml
+
+# === YOLO experiment outputs & runs ===
+experiments/
+runs/
+debug/
+
+# YOLO/torch weights (can be re-generated)
+*.pt
+
+# Logs
+*.log
