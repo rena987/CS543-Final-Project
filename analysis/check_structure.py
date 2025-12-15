@@ -8,8 +8,13 @@ Checks that for each split (train/valid/test):
 
 import os
 from pathlib import Path
+from pathlib import Path
 
-root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+root = PROJECT_ROOT / "data" / "bosch"
+
+
+#root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
 folders = ["train", "valid", "test"]
 img_extensions = (".jpg", ".jpeg", ".png", ".bmp")
 

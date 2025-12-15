@@ -1,8 +1,13 @@
 import os
 from pathlib import Path
 
-root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
+#root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
 
+import os
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]   # CS543-Final-Project/
+root = PROJECT_ROOT / "data" / "bosch"
 
 def scan_labels_for_split(split_name: str):
     """
