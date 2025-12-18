@@ -3,9 +3,6 @@ import random
 from pathlib import Path
 import cv2
 
-#root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
-#output = Path(r"C:\Users\seren\CS543-Final-Project\debug\visualize_labels")
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 root = PROJECT_ROOT / "data" / "bosch"
 output = PROJECT_ROOT / "debug" / "visualize_labels"
@@ -17,14 +14,6 @@ output = PROJECT_ROOT / "debug" / "visualize_labels"
 
 
 def draw_boxes_for_split(split_name: str, num_images: int = 5):
-    """
-    For a given split (train/valid/test), randomly pick a few images,
-    draw YOLO boxes on them, and save to output.
-
-    This is just to visually sanity-check that:
-    - boxes align with traffic lights
-    - coords are not flipped or off-image
-    """
     img_dir = root / split_name / "images"
     label_dir = root / split_name / "labels"
 

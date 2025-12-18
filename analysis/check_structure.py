@@ -1,26 +1,13 @@
-"""
-Quick sanity check for Bosch dataset file pairing.
-
-Checks that for each split (train/valid/test):
-- every image in images/ has a matching .txt file in labels/
-- every label in labels/ has a matching image in images/
-"""
-
-import os
-from pathlib import Path
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 root = PROJECT_ROOT / "data" / "bosch"
 
-
-#root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
 folders = ["train", "valid", "test"]
 img_extensions = (".jpg", ".jpeg", ".png", ".bmp")
 
 
 def get_files(dir_path, exts=None):
-    """Return list of files in dir_path filtered by extension (if given)."""
     if not dir_path.exists():
         return []
 
@@ -35,20 +22,19 @@ def get_files(dir_path, exts=None):
 
 
 def check_split(split):
-    """Check one split: train / valid / test."""
     img_dir = root / split / "images"
     label_dir = root / split / "labels"
 
-    print(f"\n=== Split: {split} ===")
+    print(f"Split: {split}")
     print(f"image dir: {img_dir}")
     print(f"label dir: {label_dir}")
 
     if not img_dir.exists():
-        print("MISSING image directory, skipping")
+        print("Missing image directory")
         return
 
     if not label_dir.exists():
-        print("MISSING label directory, skipping")
+        print("Missing label directory")
         return
 
     images = get_files(img_dir, img_extensions)
@@ -71,7 +57,6 @@ def check_split(split):
 
     print(f"labels with no image: {len(missing_images)}")
     if missing_images:
-        print("  (showing up to 10)")
         for name in missing_images[:10]:
             print(f"   - {name}")
 

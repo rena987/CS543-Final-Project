@@ -1,21 +1,13 @@
 import os
 from pathlib import Path
 
-#root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
-
 import os
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]   # CS543-Final-Project/
+PROJECT_ROOT = Path(__file__).resolve().parents[1] 
 root = PROJECT_ROOT / "data" / "bosch"
 
 def scan_labels_for_split(split_name: str):
-    """
-    Go through all label files in a split (train/valid/test) and:
-    - collect unique class ids
-    - count total boxes
-    - flag obviously broken lines
-    """
     label_dir = root / split_name / "labels"
 
     if not label_dir.exists():
@@ -35,7 +27,7 @@ def scan_labels_for_split(split_name: str):
     num_empty_files = 0
     bad_lines = []  
 
-    print(f"\n=== Split: {split_name} ===")
+    print(f"Split: {split_name}")
     print(f"label dir: {label_dir}")
 
     for fname in sorted(os.listdir(label_dir)):
@@ -100,12 +92,12 @@ def main():
         split_stats.append(stats)
         all_unique_ids |= stats["unique_ids"]
 
-    print("\n=== Summary across all splits ===")
+    print("Summary across all splits")
     print(f"overall unique class ids: {sorted(all_unique_ids) if all_unique_ids else []}")
 
     if all_unique_ids:
         max_id = max(all_unique_ids)
-        print(f"suggested nc (if contiguous from 0) = {max_id + 1}")
+        print(f"suggested id = {max_id + 1}")
     else:
         print("no boxes found at all, which would be weird for this dataset.")
 
