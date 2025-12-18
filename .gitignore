@@ -29,4 +29,45 @@ debug/
 *.pt
 
 # Logs
-*.log
+*.log# Python venvs
+.venv/
+.venv_cuda/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# YOLO outputs / large artifacts
+runs/
+experiments/
+*.pt
+*.onnx
+*.engine
+
+# virtual envs
+.venv*/
+venv*/
+
+# large data / outputs
+datasets/
+data/bosch/**/images/
+data/bosch/**/labels/
+qual_examples/
+runs/
+experiments/
+
+# model weights / caches
+*.pt
+*.pth
+*.onnx
+*.engine
+*.cache
+\.venv/
+.venv_cuda/
+.venv_gpu/
+datasets/
+experiments/
+runs/
+qual_examples/

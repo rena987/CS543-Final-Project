@@ -8,18 +8,14 @@ IMG_DIR = Path("data/bosch/valid/images")
 OUT_DIR = Path("debug/sahi_tiling_valid")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# SAHI model wrapper (Ultralytics YOLOv8)
 detection_model = UltralyticsDetectionModel(
     model_path=str(MODEL_PATH),
     confidence_threshold=0.25,
     device="cpu",  
 )
 
-# SAHI tiling params 
 SLICE_H, SLICE_W = 640, 640
 OVERLAP_H, OVERLAP_W = 0.2, 0.2
-
-# Run a limited number first 
 MAX_IMAGES = 50
 
 imgs = sorted([p for p in IMG_DIR.glob("*.jpg")])
@@ -36,7 +32,6 @@ for i, img_path in enumerate(imgs, 1):
         overlap_height_ratio=OVERLAP_H,
         overlap_width_ratio=OVERLAP_W,
     )
-    # Save visual
     result.export_visuals(export_dir=str(OUT_DIR))
     if i % 10 == 0:
         print(f"  done {i}/{len(imgs)}")

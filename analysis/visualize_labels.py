@@ -1,24 +1,16 @@
 import os
 import random
 from pathlib import Path
-
 import cv2
 
 #root = Path(r"C:\Users\seren\CS543-Final-Project\data\bosch")
 #output = Path(r"C:\Users\seren\CS543-Final-Project\debug\visualize_labels")
-import os
-import random
-from pathlib import Path
-import cv2
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 root = PROJECT_ROOT / "data" / "bosch"
 output = PROJECT_ROOT / "debug" / "visualize_labels"
 
-
-from pathlib import Path
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]   # CS543-Final-Project/
+PROJECT_ROOT = Path(__file__).resolve().parents[1]  
 root = PROJECT_ROOT / "data" / "bosch"
 
 output = PROJECT_ROOT / "debug" / "visualize_labels"

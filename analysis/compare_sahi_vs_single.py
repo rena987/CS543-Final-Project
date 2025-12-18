@@ -20,15 +20,11 @@ OUT_DIR = PROJECT_ROOT / "debug" / "compare_sahi_vs_single"
 CONF = 0.25
 
 # SAHI tiling params
-SLICE_H = 512
-SLICE_W = 512
+SLICE_H = 640
+SLICE_W = 640
 OVERLAP = 0.20
-
-# how many images to compare
 NUM_IMAGES = 20
 RANDOM_SEED = 0
-
-# IoU threshold to consider "same detection"
 IOU_MATCH = 0.50
 IOU_DUP = 0.80
 
@@ -87,7 +83,7 @@ def get_sahi_boxes(sahi_model, img_path):
 
     boxes_out = []
     for op in result.object_prediction_list:
-        bbox = op.bbox  # minx, miny, maxx, maxy
+        bbox = op.bbox  
         x1, y1, x2, y2 = bbox.minx, bbox.miny, bbox.maxx, bbox.maxy
         cls_id = int(op.category.id)
         conf = float(op.score.value)
@@ -97,7 +93,6 @@ def get_sahi_boxes(sahi_model, img_path):
 
 
 def count_duplicates(boxes):
-    # count pairs that overlap a lot (rough duplicate estimate)
     dup = 0
     xyxy = [b[:4] for b in boxes]
     for i in range(len(xyxy)):
@@ -118,6 +113,7 @@ def count_new_sahi_vs_single(sahi_boxes, single_boxes):
     return new_count
 
 
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     out_single = OUT_DIR / "single"
@@ -126,7 +122,6 @@ def main():
     for d in [out_single, out_sahi, out_side]:
         d.mkdir(parents=True, exist_ok=True)
 
-    # load models
     yolo_model = YOLO(str(MODEL_PATH))
     sahi_model = UltralyticsDetectionModel(
         model_path=str(MODEL_PATH),
@@ -134,7 +129,6 @@ def main():
         device="cpu",
     )
 
-    # pick images
     imgs = sorted([p for p in IMG_DIR.iterdir() if p.suffix.lower() in [".jpg", ".jpeg", ".png"]])
     random.seed(RANDOM_SEED)
     chosen = random.sample(imgs, k=min(NUM_IMAGES, len(imgs)))
@@ -162,23 +156,19 @@ def main():
             new_sahi = count_new_sahi_vs_single(sahi_boxes, single_boxes)
             dup_sahi = count_duplicates(sahi_boxes)
 
-            # visuals
             vis_single = draw_boxes(img, single_boxes, color=(0, 255, 0), prefix="")
             vis_sahi = draw_boxes(img, sahi_boxes, color=(0, 0, 255), prefix="")
 
-            # save
             out1 = out_single / img_path.name
             out2 = out_sahi / img_path.name
             cv2.imwrite(str(out1), vis_single)
             cv2.imwrite(str(out2), vis_sahi)
 
-            # side-by-side (resize to same height)
             h = img.shape[0]
             a = cv2.resize(vis_single, (int(vis_single.shape[1] * h / vis_single.shape[0]), h))
             b = cv2.resize(vis_sahi, (int(vis_sahi.shape[1] * h / vis_sahi.shape[0]), h))
             side = np.hstack([a, b])
 
-            # add titles
             cv2.putText(side, "Single-shot (no tiling)", (20, 40),
                         cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 3, cv2.LINE_AA)
             cv2.putText(side, "SAHI tiling", (a.shape[1] + 20, 40),
